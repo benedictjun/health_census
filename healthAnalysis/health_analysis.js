@@ -23,5 +23,9 @@ function addPatient() {
       generateReport(); //update and display the analysis report based on the newly added patient data
     }
   }
-
-
+function resetForm() {
+    document.getElementById("name").value = "";
+    document.querySelector('input[name="gender"]:checked').checked = false;
+    document.getElementById("age").value = "";
+    document.getElementById("condition").value = "";
+  }
