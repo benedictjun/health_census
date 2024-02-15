@@ -33,30 +33,32 @@ function addPatient() {
 
 // function calculates and constructs an analysis report based on the collected patient data stored in the patients array 
   function generateReport() {
-    const numPatients = patients.length;
+    const numPatients = patients.length; //number of patients stored in array
     const conditionsCount = {
       Diabetes: 0,
       Thyroid: 0,
       "High Blood Pressure": 0,
-    };
+    }; //Counters for conditions initially set to zero
     const genderConditionsCount = {
       Male: {
         Diabetes: 0,
         Thyroid: 0,
         "High Blood Pressure": 0,
-      },
+      }, //Gender counter set to zero
       Female: {
         Diabetes: 0,
         Thyroid: 0,
         "High Blood Pressure": 0,
-      },
+      }, //Gender counter set to zero
     };
 
+    //for loop to iterate through patients' data in the array
     for (const patient of patients) {
       conditionsCount[patient.condition]++;
       genderConditionsCount[patient.gender][patient.condition]++;
-    }
+    } 
 
+    //Dynamically updates the HTML content within the report element
     report.innerHTML = `Number of patients: ${numPatients}<br><br>`;
     report.innerHTML += `Conditions Breakdown:<br>`;
     for (const condition in conditionsCount) {
