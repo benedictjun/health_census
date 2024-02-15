@@ -75,3 +75,38 @@ function addPatient() {
   }
 
 addPatientButton.addEventListener("click", addPatient);
+
+//This function fetches the health condition data from the health.json file and searches for a matching condition based on user input
+function searchCondition() {
+    const input = document.getElementById('conditionInput').value.toLowerCase(); //This retrieves the value entered into the input field with the ID conditionInput. It converts the entered text to lowercase to ensure case-insensitive comparison.
+    const resultDiv = document.getElementById('result'); 
+    resultDiv.innerHTML = '';
+
+    fetch('health_analysis.json')
+      .then(response => response.json()) //Converts the fetched response into JSON format.
+      .then(data => {
+        const condition = data.conditions.find(item => item.name.toLowerCase() === input); // This searches within the JSON data for a health condition whose name matches the entered input.
+
+        if (condition) {
+          const symptoms = condition.symptoms.join(', ');
+          const prevention = condition.prevention.join(', ');
+          const treatment = condition.treatment;
+
+          resultDiv.innerHTML += `<h2>${condition.name}</h2>`;
+          resultDiv.innerHTML += `<img src="${condition.imagesrc}" alt="hjh">`;
+
+          resultDiv.innerHTML += `<p><strong>Symptoms:</strong> ${symptoms}</p>`;
+          resultDiv.innerHTML += `<p><strong>Prevention:</strong> ${prevention}</p>`;
+          resultDiv.innerHTML += `<p><strong>Treatment:</strong> ${treatment}</p>`;
+        } else {
+          resultDiv.innerHTML = 'Condition not found.';
+        }
+      })
+
+      //This handles any errors that might occur during the fetch request or data processing.
+      .catch(error => {
+        console.error('Error:', error);
+        resultDiv.innerHTML = 'An error occurred while fetching data.';
+      });
+  }
+    btnSearch.addEventListener('click', searchCondition);
